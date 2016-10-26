@@ -1,6 +1,5 @@
-import os
 import struct
-from array import array
+import numpy as np
 
 """
 MNIST image input image format:
@@ -30,9 +29,9 @@ def parse_mnist_imgs(path_to_imgs, expected_magic_number=IMG_MAGIC_NUM):
         if read_magic_num != expected_magic_number:
             print("Magic num mismatch! Expected: {} Got: {}".format(expected_magic_number, read_magic_num))
 
-        images = [array("B", binary_img_file.read(n_rows * n_cols)) for _ in range(n_images)]
+        images = np.fromfile(binary_img_file, dtype=np.uint8).reshape(n_images, n_rows * n_cols)
 
-    return images
+        return images
 
 """
 MNIST label input image format:
@@ -58,6 +57,6 @@ def parse_mnist_labels(path_to_labels, expected_magic_number=LABELS_MAGIC_NUM):
         if read_magic_num != expected_magic_number:
             print("Magic num mismatch! Expected: {} Got: {}".format(expected_magic_number, read_magic_num))
 
-        labels = array("B", binary_labels_file.read())
+        labels = np.fromfile(binary_labels_file, dtype=np.uint8)
 
-    return labels
+        return labels
