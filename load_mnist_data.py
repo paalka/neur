@@ -28,7 +28,7 @@ def parse_mnist_imgs(path_to_imgs, expected_magic_number=IMG_MAGIC_NUM):
         read_magic_num, n_images, n_rows, n_cols = struct.unpack(">IIII", binary_img_file.read(16))
 
         if read_magic_num != expected_magic_number:
-            print("Magic num mismatch! Expected: " + expected_magic_number + " got: " + read_magic_num)
+            print("Magic num mismatch! Expected: {} Got: {}".format(expected_magic_number, read_magic_num))
 
         images = [array("B", binary_img_file.read(n_rows * n_cols)) for _ in range(n_images)]
 
@@ -56,7 +56,7 @@ def parse_mnist_labels(path_to_labels, expected_magic_number=LABELS_MAGIC_NUM):
         read_magic_num, n_labes = struct.unpack(">II", binary_labels_file.read(8))
 
         if read_magic_num != expected_magic_number:
-            print("Magic num mismatch! Expected: " + expected_magic_number + " got: " + read_magic_num)
+            print("Magic num mismatch! Expected: {} Got: {}".format(expected_magic_number, read_magic_num))
 
         labels = array("B", binary_labels_file.read())
 
