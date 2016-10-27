@@ -21,7 +21,7 @@ Source: http://yann.lecun.com/exdb/mnist/
 """
 
 IMG_MAGIC_NUM = 2051
-def parse_mnist_imgs(path_to_imgs, expected_magic_number=IMG_MAGIC_NUM):
+def load_mnist_imgs(path_to_imgs, expected_magic_number=IMG_MAGIC_NUM):
     with open(path_to_imgs, 'rb') as binary_img_file:
         # Obtain info from the header
         read_magic_num, n_images, n_rows, n_cols = struct.unpack(">IIII", binary_img_file.read(16))
@@ -50,7 +50,7 @@ Source: http://yann.lecun.com/exdb/mnist/
 """
 
 LABELS_MAGIC_NUM = 2049
-def parse_mnist_labels(path_to_labels, expected_magic_number=LABELS_MAGIC_NUM):
+def load_mnist_labels(path_to_labels, expected_magic_number=LABELS_MAGIC_NUM):
     with open(path_to_labels, 'rb') as binary_labels_file:
         read_magic_num, n_labes = struct.unpack(">II", binary_labels_file.read(8))
 
