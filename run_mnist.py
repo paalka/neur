@@ -6,24 +6,24 @@ from NeuralNet.layers import TanhLayer, SoftmaxOutputLayer, LinearLayer
 from NeuralNet.utils import get_accuracy, convert_to_one_hot
 from NeuralNet.NeuralNet import NeuralNet
 
-normalization_constant = 255.0 # 255 is the highest value a pixel in the MNIST dataset can have.
-mnist_img_width = 28 # in pixels
-mnist_img_height = 28 # in pixels
+NORMALIZATION_CONSTANT = 255.0 # 255 is the highest value a pixel in the MNIST dataset can have.
+MNIST_IMG_WIDTH = 28 # in pixels
+MNIST_IMG_HEIGHT = 28 # in pixels
 
-mnist_n_possible_values = 10
+MNIST_N_POSSIBLE_VALUES = 10
 
-training_mnist_imgs = load_mnist_imgs("data/train-images-idx3-ubyte") / normalization_constant
-training_mnist_labels = convert_to_one_hot(load_mnist_labels("data/train-labels-idx1-ubyte"), mnist_n_possible_values)
+training_mnist_imgs = load_mnist_imgs("data/train-images-idx3-ubyte")[:10000] / NORMALIZATION_CONSTANT
+training_mnist_labels = convert_to_one_hot(load_mnist_labels("data/train-labels-idx1-ubyte")[:10000], MNIST_N_POSSIBLE_VALUES)
 
-test_mnist_imgs = load_mnist_imgs("data/t10k-images-idx3-ubyte") / normalization_constant
-test_mnist_labels = convert_to_one_hot(load_mnist_labels("data/t10k-labels-idx1-ubyte"), mnist_n_possible_values)
+test_mnist_imgs = load_mnist_imgs("data/t10k-images-idx3-ubyte") / NORMALIZATION_CONSTANT
+test_mnist_labels = convert_to_one_hot(load_mnist_labels("data/t10k-labels-idx1-ubyte"), MNIST_N_POSSIBLE_VALUES)
 
 hidden_layer_1_neurons = 100
 hidden_layer_2_neurons = 100
 
-layer_1 = (LinearLayer(mnist_img_width * mnist_img_height, hidden_layer_1_neurons), TanhLayer())
+layer_1 = (LinearLayer(MNIST_IMG_WIDTH * MNIST_IMG_HEIGHT, hidden_layer_1_neurons), TanhLayer())
 layer_2 = (LinearLayer(hidden_layer_1_neurons, hidden_layer_2_neurons), TanhLayer())
-layer_3 = (LinearLayer(hidden_layer_2_neurons, mnist_n_possible_values), SoftmaxOutputLayer())
+layer_3 = (LinearLayer(hidden_layer_2_neurons, MNIST_N_POSSIBLE_VALUES), SoftmaxOutputLayer())
 
 net = NeuralNet(layer_1, layer_2, layer_3)
 
