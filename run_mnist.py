@@ -15,11 +15,13 @@ layer_3 = (LinearLayer(hidden_layer_2_neurons, 10), SoftmaxOutputLayer())
 
 net = NeuralNet(layer_1, layer_2, layer_3)
 
-training_mnist_imgs = load_mnist_imgs("data/train-images-idx3-ubyte") / 255.0
-training_mnist_labels = convert_to_one_hot(load_mnist_labels("data/train-labels-idx1-ubyte"), 10)
+normalization_constant = 255.0 # 255 is the highest value a pixel in the MNIST dataset can have.
+mnist_n_possible_values = 10
+training_mnist_imgs = load_mnist_imgs("data/train-images-idx3-ubyte") / normalization_constant
+training_mnist_labels = convert_to_one_hot(load_mnist_labels("data/train-labels-idx1-ubyte"), mnist_n_possible_values)
 
-test_mnist_imgs = load_mnist_imgs("data/t10k-images-idx3-ubyte") / 255.0
-test_mnist_labels = convert_to_one_hot(load_mnist_labels("data/t10k-labels-idx1-ubyte"), 10)
+test_mnist_imgs = load_mnist_imgs("data/t10k-images-idx3-ubyte") / normalization_constant
+test_mnist_labels = convert_to_one_hot(load_mnist_labels("data/t10k-labels-idx1-ubyte"), mnist_n_possible_values)
 
 X_train, X_validation, T_train, T_validation = train_test_split(training_mnist_imgs, training_mnist_labels, test_size=0.2)
 
