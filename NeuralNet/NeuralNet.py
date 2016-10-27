@@ -9,12 +9,12 @@ class NeuralNet:
             self.layers.append(lin_projection)
             self.layers.append(non_lin_trans)
 
-    def feedforward(self, input_data):
+    def feedforward(self, input_data, perform_dropout=False):
         activations = [input_data]
 
         for layer in self.layers:
             X = activations[-1]
-            Y = layer.get_output(X)
+            Y = layer.get_output(X, perform_dropout)
             activations.append(Y)
 
         return activations
@@ -51,7 +51,7 @@ class NeuralNet:
         for i in xrange(n_iterations):
             print("Started iteration: {} of {}".format(i+1, n_iterations))
             for X, T in XT_batches:
-                activations = self.feedforward(X)
+                activations = self.feedforward(X, perform_dropout=True)
                 self.backpropagate(learning_rate, activations, T)
 
             activations = self.feedforward(X_validation)
