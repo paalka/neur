@@ -3,7 +3,7 @@ MNIST dataset.
 The implementation is based on a wonderful guide which can be found
 [here](https://peterroelants.github.io/posts/neural_network_implementation_part01/).
 
-### How to run
+### Running the MNIST example
 Begin by downloading the MNIST dataset. The location of the dataset is
 hardcoded to `data` in the file `run_mnist.py`, but feel free to change it.
 
