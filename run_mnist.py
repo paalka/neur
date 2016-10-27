@@ -2,7 +2,7 @@ import numpy as np
 from sklearn.model_selection import train_test_split
 from load_mnist_data import load_mnist_imgs, load_mnist_labels
 
-from layers import LogisticLayer, SoftmaxOutputLayer, LinearLayer
+from layers import TanhLayer, SoftmaxOutputLayer, LinearLayer
 from utils import get_accuracy, convert_to_one_hot
 from NeuralNet import NeuralNet
 
@@ -21,8 +21,8 @@ test_mnist_labels = convert_to_one_hot(load_mnist_labels("data/t10k-labels-idx1-
 hidden_layer_1_neurons = 100
 hidden_layer_2_neurons = 100
 
-layer_1 = (LinearLayer(mnist_img_width * mnist_img_height, hidden_layer_1_neurons), LogisticLayer())
-layer_2 = (LinearLayer(hidden_layer_1_neurons, hidden_layer_2_neurons), LogisticLayer())
+layer_1 = (LinearLayer(mnist_img_width * mnist_img_height, hidden_layer_1_neurons), TanhLayer())
+layer_2 = (LinearLayer(hidden_layer_1_neurons, hidden_layer_2_neurons), TanhLayer())
 layer_3 = (LinearLayer(hidden_layer_2_neurons, mnist_n_possible_values), SoftmaxOutputLayer())
 
 net = NeuralNet(layer_1, layer_2, layer_3)

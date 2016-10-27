@@ -35,6 +35,15 @@ class LinearLayer(Layer):
 class LogisticLayer(Layer):
 
     def get_output(self, X):
+        return logistic(X)
+
+    def get_input_gradient(self, Y, output_gradient):
+        return dlogistic(Y) * output_gradient
+
+
+class TanhLayer(Layer):
+
+    def get_output(self, X):
         return tanh(X)
 
     def get_input_gradient(self, Y, output_gradient):
