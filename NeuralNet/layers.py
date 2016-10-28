@@ -6,7 +6,7 @@ class Layer:
     def get_params_gradient(self, X, output_gradient):
         return []
 
-    def get_output(self, X, perform_dropout=False):
+    def get_output(self, X, activate_dropout=False):
         pass
 
     def get_input_gradient(self, Y, output_gradient=None, T=None):
@@ -15,15 +15,15 @@ class Layer:
 
 class LinearLayer(Layer):
 
-    def __init__(self, n_in, n_out, do_dropout=False):
+    def __init__(self, n_in, n_out, may_have_dropout=False):
         self.W = np.random.normal(size=(n_in, n_out)) * 0.1
         self.b = np.zeros(n_out)
-        self.do_dropout = do_dropout
+        self.may_have_dropout = may_have_dropout
 
-    def get_output(self, X, perform_dropout=False):
+    def get_output(self, X, activate_dropout=False):
         Y = X.dot(self.W) + self.b
 
-        if perform_dropout and self.do_dropout:
+        if activate_dropout and self.may_have_dropout:
             p = 0.7
             Y_d = (np.random.rand(*Y.shape) < p) / p
             Y *= Y_d
@@ -43,7 +43,7 @@ class LinearLayer(Layer):
 
 class LogisticLayer(Layer):
 
-    def get_output(self, X, perform_dropout=False):
+    def get_output(self, X, activate_dropout=False):
         return logistic(X)
 
     def get_input_gradient(self, Y, output_gradient):
@@ -52,7 +52,7 @@ class LogisticLayer(Layer):
 
 class TanhLayer(Layer):
 
-    def get_output(self, X, perform_dropout=False):
+    def get_output(self, X, activate_dropout=False):
         return tanh(X)
 
     def get_input_gradient(self, Y, output_gradient):
@@ -61,7 +61,7 @@ class TanhLayer(Layer):
 
 class SoftmaxOutputLayer(Layer):
 
-    def get_output(self, X, perform_dropout=False):
+    def get_output(self, X, activate_dropout=False):
         return softmax(X)
 
     def get_input_gradient(self, Y, T):
