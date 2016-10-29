@@ -15,17 +15,17 @@ class Layer:
 
 class LinearLayer(Layer):
 
-    def __init__(self, n_in, n_out, may_have_dropout=False):
+    def __init__(self, n_in, n_out, may_have_dropout=False, dropout_p=0.5):
         self.W = np.random.normal(size=(n_in, n_out)) * 0.1
         self.b = np.zeros(n_out)
         self.may_have_dropout = may_have_dropout
+        self.dropout_p = dropout_p
 
     def get_output(self, X, activate_dropout=False):
         Y = X.dot(self.W) + self.b
 
         if activate_dropout and self.may_have_dropout:
-            p = 0.7
-            Y_d = (np.random.rand(*Y.shape) < p) / p
+            Y_d = (np.random.rand(*Y.shape) < self.dropout_p) / self.dropout_p
             Y *= Y_d
 
         return Y
