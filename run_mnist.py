@@ -12,8 +12,8 @@ MNIST_IMG_HEIGHT = 28 # in pixels
 
 MNIST_N_POSSIBLE_VALUES = 10
 
-training_mnist_imgs = load_mnist_imgs("data/train-images-idx3-ubyte")[:10000] / NORMALIZATION_CONSTANT
-training_mnist_labels = convert_to_one_hot(load_mnist_labels("data/train-labels-idx1-ubyte")[:10000], MNIST_N_POSSIBLE_VALUES)
+training_mnist_imgs = load_mnist_imgs("data/train-images-idx3-ubyte") / NORMALIZATION_CONSTANT
+training_mnist_labels = convert_to_one_hot(load_mnist_labels("data/train-labels-idx1-ubyte"), MNIST_N_POSSIBLE_VALUES)
 
 test_mnist_imgs = load_mnist_imgs("data/t10k-images-idx3-ubyte") / NORMALIZATION_CONSTANT
 test_mnist_labels = convert_to_one_hot(load_mnist_labels("data/t10k-labels-idx1-ubyte"), MNIST_N_POSSIBLE_VALUES)
