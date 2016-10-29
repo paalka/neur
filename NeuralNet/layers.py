@@ -30,7 +30,6 @@ class LinearLayer(Layer):
 
         return Y
 
-
     def get_input_gradient(self, Y, output_gradient):
         return output_gradient.dot(self.W.T)
 
