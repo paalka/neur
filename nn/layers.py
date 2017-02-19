@@ -1,6 +1,7 @@
 import numpy as np
 from activation_functions import logistic, dlogistic, softmax, tanh, dtanh
 
+
 class Layer:
 
     def get_params_gradient(self, X, output_gradient):
@@ -14,6 +15,7 @@ class Layer:
 
     def update_layer(self, output_gradient, learning_rate, activations):
         pass
+
 
 class LinearLayer(Layer):
 
