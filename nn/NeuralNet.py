@@ -1,5 +1,6 @@
+from __future__ import absolute_import
 import numpy as np
-from layers import LinearLayer
+from nn.layers import LinearLayer
 
 class NeuralNet:
 
