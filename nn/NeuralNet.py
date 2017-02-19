@@ -1,4 +1,3 @@
-from nn.layers import LinearLayer
 from nn.data_partitioners import mini_batch_partitioner
 
 class NeuralNet:
@@ -26,12 +25,8 @@ class NeuralNet:
             Y = activations.pop()
             input_gradient = layer.get_input_gradient(Y, output_gradient)
 
-            if isinstance(layer, LinearLayer):
-                W_gradient = layer.get_weight_gradient(activations[-1], output_gradient)
-                b_gradient = layer.get_bias_gradient(activations[-1], output_gradient)
-
-                layer.W -= learning_rate * W_gradient
-                layer.b -= learning_rate * b_gradient
+            # Will only be executed for the linear layers.
+            layer.update_layer(output_gradient, learning_rate, activations)
 
             output_gradient = input_gradient
 

@@ -12,6 +12,8 @@ class Layer:
     def get_input_gradient(self, Y, output_gradient=None, T=None):
         pass
 
+    def update_layer(self, output_gradient, learning_rate, activations):
+        pass
 
 class LinearLayer(Layer):
 
@@ -29,6 +31,13 @@ class LinearLayer(Layer):
             Y *= Y_d
 
         return Y
+
+    def update_layer(self, output_gradient, learning_rate, activations):
+        W_gradient = self.get_weight_gradient(activations[-1], output_gradient)
+        b_gradient = self.get_bias_gradient(activations[-1], output_gradient)
+
+        self.W -= learning_rate * W_gradient
+        self.b -= learning_rate * b_gradient
 
     def get_input_gradient(self, Y, output_gradient):
         return output_gradient.dot(self.W.T)
