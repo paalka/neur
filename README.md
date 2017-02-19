@@ -9,5 +9,5 @@ homepage](http://yann.lecun.com/exdb/mnist/). The location of the dataset is
 hardcoded to `data` in the file `run_mnist.py`, but feel free to change it.
 
 Then, install the required libraries specified in `requirements.txt`.
-You should now be able to run `python run_mnist.py`, which trains the network
+You should now be able to run `python -m examples.run_mnist`, which trains the network
 and prints the final accuracy.
