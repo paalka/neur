@@ -61,4 +61,6 @@ class NeuralNet:
             if len(validation_costs) > 3:
                 if validation_costs[-1] >= validation_costs[-2] >= validation_costs[-3]:
                     print("Cost did not decrease after three iterations! Quitting.")
-                    return
+                    return validation_costs
+
+        return validation_costs

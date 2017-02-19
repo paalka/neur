@@ -30,7 +30,7 @@ net = NeuralNet(layer_1, layer_2, layer_3)
 X_train, X_validation, T_train, T_validation = train_test_split(training_mnist_imgs, training_mnist_labels, test_size=0.2)
 
 learning_rate = 0.3
-net.train((X_train, T_train), (X_validation, T_validation), learning_rate)
+costs = net.train((X_train, T_train), (X_validation, T_validation), learning_rate)
 
 activations = net.feedforward(test_mnist_imgs)
 true = np.argmax(test_mnist_labels, axis=1)
