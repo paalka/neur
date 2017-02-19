@@ -35,7 +35,7 @@ class NeuralNet:
 
             output_gradient = input_gradient
 
-    def train(self, training_set, validation_set, learning_rate=0.1, batch_size=25, n_iterations=30):
+    def partition_data(self, training_set, validation_set, batch_size=25):
         X_train = training_set[:][0]
         T_train = training_set[:][1]
 
@@ -47,6 +47,11 @@ class NeuralNet:
             np.array_split(X_train, n_batches, axis=0),
             np.array_split(T_train, n_batches, axis=0))
 
+        return XT_batches, X_validation, T_validation
+
+
+    def train(self, training_set, validation_set, learning_rate=0.1, batch_size=25, n_iterations=30):
+        XT_batches, X_validation, T_validation = self.partition_data(training_set, validation_set, batch_size)
         validation_costs = []
         for i in xrange(n_iterations):
             print("Started iteration: {} of {}".format(i+1, n_iterations))
