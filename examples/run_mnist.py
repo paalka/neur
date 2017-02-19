@@ -5,6 +5,7 @@ from examples.load_mnist_data import load_mnist_imgs, load_mnist_labels
 
 from nn.layers import LinearLayer, TanhLayer, SoftmaxOutputLayer
 from nn.utils import get_accuracy, convert_to_one_hot
+from nn.data_partitioners import mini_batch_partitioner
 from nn.NeuralNet import NeuralNet
 
 NORMALIZATION_CONSTANT = 255.0 # 255 is the highest value a pixel in the MNIST dataset can have.
@@ -26,7 +27,7 @@ layer_1 = (LinearLayer(MNIST_IMG_WIDTH * MNIST_IMG_HEIGHT, hidden_layer_1_neuron
 layer_2 = (LinearLayer(hidden_layer_1_neurons, hidden_layer_2_neurons), TanhLayer())
 layer_3 = (LinearLayer(hidden_layer_2_neurons, MNIST_N_POSSIBLE_VALUES), SoftmaxOutputLayer())
 
-net = NeuralNet(layer_1, layer_2, layer_3)
+net = NeuralNet(mini_batch_partitioner, layer_1, layer_2, layer_3)
 
 X_train, X_validation, T_train, T_validation = train_test_split(training_mnist_imgs, training_mnist_labels, test_size=0.2)
 

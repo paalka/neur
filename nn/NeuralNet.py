@@ -2,7 +2,9 @@ from nn.data_partitioners import mini_batch_partitioner
 
 class NeuralNet:
 
-    def __init__(self, *layers):
+    def __init__(self, partitioner=mini_batch_partitioner, *layers):
+        self.partitioner = partitioner
+
         self.layers = []
         for lin_projection, non_lin_trans in layers:
             self.layers.append(lin_projection)
@@ -31,8 +33,9 @@ class NeuralNet:
             output_gradient = input_gradient
 
     def train(self, training_set, validation_set, learning_rate=0.1, batch_size=25, n_iterations=30):
-        XT_batches, X_validation, T_validation = mini_batch_partitioner(training_set, validation_set, batch_size)
+        XT_batches, X_validation, T_validation = self.partitioner(training_set, validation_set, batch_size)
         validation_costs = []
+
         for i in xrange(n_iterations):
             print("Started iteration: {} of {}".format(i+1, n_iterations))
             for X, T in XT_batches:
