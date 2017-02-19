@@ -1,6 +1,5 @@
-from __future__ import absolute_import
-import numpy as np
 from nn.layers import LinearLayer
+from nn.data_partitioners import mini_batch_partitioner
 
 class NeuralNet:
 
@@ -36,23 +35,8 @@ class NeuralNet:
 
             output_gradient = input_gradient
 
-    def partition_data(self, training_set, validation_set, batch_size=25):
-        X_train = training_set[:][0]
-        T_train = training_set[:][1]
-
-        X_validation = validation_set[:][0]
-        T_validation = validation_set[:][1]
-
-        n_batches = X_train.shape[0] / batch_size
-        XT_batches = zip(
-            np.array_split(X_train, n_batches, axis=0),
-            np.array_split(T_train, n_batches, axis=0))
-
-        return XT_batches, X_validation, T_validation
-
-
     def train(self, training_set, validation_set, learning_rate=0.1, batch_size=25, n_iterations=30):
-        XT_batches, X_validation, T_validation = self.partition_data(training_set, validation_set, batch_size)
+        XT_batches, X_validation, T_validation = mini_batch_partitioner(training_set, validation_set, batch_size)
         validation_costs = []
         for i in xrange(n_iterations):
             print("Started iteration: {} of {}".format(i+1, n_iterations))
