@@ -63,7 +63,7 @@ class TanhLayer(Layer):
         return dtanh(Y) * output_gradient
 
 
-class SoftmaxOutputLayer(Layer):
+class SoftmaxLayer(Layer):
 
     def get_output(self, X):
         return softmax(X)

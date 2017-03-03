@@ -3,7 +3,7 @@ import numpy as np
 from sklearn.model_selection import train_test_split
 from examples.load_mnist_data import load_mnist_imgs, load_mnist_labels
 
-from nn.layers import LinearLayer, TanhLayer, SoftmaxOutputLayer
+from nn.layers import LinearLayer, TanhLayer, SoftmaxLayer
 from nn.utils import get_accuracy, convert_to_one_hot
 from nn.data_partitioners import mini_batch_partitioner
 from nn.NeuralNet import NeuralNet
@@ -25,7 +25,7 @@ hidden_layer_2_neurons = 100
 
 layer_1 = (LinearLayer(MNIST_IMG_WIDTH * MNIST_IMG_HEIGHT, hidden_layer_1_neurons), TanhLayer())
 layer_2 = (LinearLayer(hidden_layer_1_neurons, hidden_layer_2_neurons), TanhLayer())
-layer_3 = (LinearLayer(hidden_layer_2_neurons, MNIST_N_POSSIBLE_VALUES), SoftmaxOutputLayer())
+layer_3 = (LinearLayer(hidden_layer_2_neurons, MNIST_N_POSSIBLE_VALUES), SoftmaxLayer())
 
 net = NeuralNet(mini_batch_partitioner, layer_1, layer_2, layer_3)
 
