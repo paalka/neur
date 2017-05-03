@@ -32,7 +32,7 @@ class NeuralNet:
 
             output_gradient = input_gradient
 
-    def train(self, training_set, validation_set, learning_rate=0.1, batch_size=25, n_iterations=30):
+    def train(self, training_set, validation_set, learning_rate=0.1, batch_size=32, n_iterations=30):
         XT_batches, X_validation, T_validation = self.partitioner(training_set, validation_set, batch_size)
         validation_costs = []
 
