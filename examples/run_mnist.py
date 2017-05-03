@@ -1,24 +1,28 @@
 from __future__ import absolute_import
 import numpy as np
 from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score
+from sklearn.preprocessing import OneHotEncoder
 from examples.load_mnist_data import load_mnist_imgs, load_mnist_labels
 
 from nn.layers import LinearLayer, TanhLayer, SoftmaxLayer
-from nn.utils import get_accuracy, convert_to_one_hot
-from nn.data_partitioners import mini_batch_partitioner
+from utils.data_partitioners import mini_batch_partitioner
 from nn.NeuralNet import NeuralNet
 
 NORMALIZATION_CONSTANT = 255.0 # 255 is the highest value a pixel in the MNIST dataset can have.
 MNIST_IMG_WIDTH = 28 # in pixels
 MNIST_IMG_HEIGHT = 28 # in pixels
-
 MNIST_N_POSSIBLE_VALUES = 10
 
 training_mnist_imgs = load_mnist_imgs("data/train-images-idx3-ubyte") / NORMALIZATION_CONSTANT
-training_mnist_labels = convert_to_one_hot(load_mnist_labels("data/train-labels-idx1-ubyte"), MNIST_N_POSSIBLE_VALUES)
+training_mnist_labels = load_mnist_labels("data/train-labels-idx1-ubyte")
+
+one_hot_encoder = OneHotEncoder()
+training_mnist_labels = one_hot_encoder.fit_transform(training_mnist_labels).toarray()
 
 test_mnist_imgs = load_mnist_imgs("data/t10k-images-idx3-ubyte") / NORMALIZATION_CONSTANT
-test_mnist_labels = convert_to_one_hot(load_mnist_labels("data/t10k-labels-idx1-ubyte"), MNIST_N_POSSIBLE_VALUES)
+test_mnist_labels = load_mnist_labels("data/t10k-labels-idx1-ubyte")
+test_mnist_labels = one_hot_encoder.fit_transform(test_mnist_labels).toarray()
 
 hidden_layer_1_neurons = 100
 hidden_layer_2_neurons = 100
@@ -38,4 +42,4 @@ activations = net.feedforward(test_mnist_imgs)
 true = np.argmax(test_mnist_labels, axis=1)
 predictions = np.argmax(activations[-1], axis=1)
 
-print(get_accuracy(predictions, true))
+print(accuracy_score(predictions, true))

@@ -52,11 +52,11 @@ Source: http://yann.lecun.com/exdb/mnist/
 LABELS_MAGIC_NUM = 2049
 def load_mnist_labels(path_to_labels, expected_magic_number=LABELS_MAGIC_NUM):
     with open(path_to_labels, 'rb') as binary_labels_file:
-        read_magic_num, n_labes = struct.unpack(">II", binary_labels_file.read(8))
+        read_magic_num, n_labels = struct.unpack(">II", binary_labels_file.read(8))
 
         if read_magic_num != expected_magic_number:
             print("Magic num mismatch! Expected: {} Got: {}".format(expected_magic_number, read_magic_num))
 
-        labels = np.fromfile(binary_labels_file, dtype=np.uint8)
+        labels = np.fromfile(binary_labels_file, dtype=np.uint8).reshape(n_labels, 1)
 
         return labels
