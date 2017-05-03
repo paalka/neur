@@ -1,4 +1,4 @@
-from nn.data_partitioners import mini_batch_partitioner
+from utils.data_partitioners import mini_batch_partitioner
 
 class NeuralNet:
 
