@@ -14,16 +14,6 @@ MNIST_IMG_WIDTH = 28 # in pixels
 MNIST_IMG_HEIGHT = 28 # in pixels
 MNIST_N_POSSIBLE_VALUES = 10
 
-training_mnist_imgs = load_mnist_imgs("data/train-images-idx3-ubyte") / NORMALIZATION_CONSTANT
-training_mnist_labels = load_mnist_labels("data/train-labels-idx1-ubyte")
-
-one_hot_encoder = OneHotEncoder()
-training_mnist_labels = one_hot_encoder.fit_transform(training_mnist_labels).toarray()
-
-test_mnist_imgs = load_mnist_imgs("data/t10k-images-idx3-ubyte") / NORMALIZATION_CONSTANT
-test_mnist_labels = load_mnist_labels("data/t10k-labels-idx1-ubyte")
-test_mnist_labels = one_hot_encoder.fit_transform(test_mnist_labels).toarray()
-
 hidden_layer_1_neurons = 100
 hidden_layer_2_neurons = 100
 
@@ -33,12 +23,20 @@ layer_3 = (LinearLayer(hidden_layer_2_neurons, MNIST_N_POSSIBLE_VALUES), Softmax
 
 net = NeuralNet(mini_batch_partitioner, layer_1, layer_2, layer_3)
 
+training_mnist_imgs = load_mnist_imgs("data/train-images-idx3-ubyte") / NORMALIZATION_CONSTANT
+
+one_hot_encoder = OneHotEncoder()
+training_mnist_labels = one_hot_encoder.fit_transform(load_mnist_labels("data/train-labels-idx1-ubyte")).toarray()
+
 X_train, X_validation, T_train, T_validation = train_test_split(training_mnist_imgs, training_mnist_labels, test_size=0.2)
 
 learning_rate = 0.3
 costs = net.train((X_train, T_train), (X_validation, T_validation), learning_rate)
 
+test_mnist_imgs = load_mnist_imgs("data/t10k-images-idx3-ubyte") / NORMALIZATION_CONSTANT
 activations = net.feedforward(test_mnist_imgs)
+
+test_mnist_labels = one_hot_encoder.fit_transform(load_mnist_labels("data/t10k-labels-idx1-ubyte")).toarray()
 true = np.argmax(test_mnist_labels, axis=1)
 predictions = np.argmax(activations[-1], axis=1)
 
