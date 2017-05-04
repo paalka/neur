@@ -2,9 +2,8 @@ This project is an attempt to create a simple machine learning library
 containing implemenations of a commonly used algorithms implemented in
 a way that is easy to understand.
 
-
 ### Useful guides:
-[Implementing neural networks](https://peterroelants.github.io/posts/neural_network_implementation_part01/).
+[Peter Roelants' guide to Implementing neural networks](https://peterroelants.github.io/posts/neural_network_implementation_part01/)
 
 ## Examples
 
