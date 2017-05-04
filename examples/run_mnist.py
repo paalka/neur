@@ -7,8 +7,7 @@ from sklearn.preprocessing import OneHotEncoder
 from nn.layers import LinearLayer, TanhLayer, SoftmaxLayer
 from nn.NeuralNet import NeuralNet
 from utils.data_partitioners import mini_batch_partitioner
-
-from examples.load_mnist_data import load_mnist_imgs, load_mnist_labels
+from utils.load_mnist_data import load_mnist_imgs, load_mnist_labels
 
 NORMALIZATION_CONSTANT = 255.0 # 255 is the highest value a pixel in the MNIST dataset can have.
 MNIST_IMG_WIDTH = 28 # in pixels
