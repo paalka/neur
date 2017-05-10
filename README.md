@@ -9,7 +9,8 @@ pip install -r requirements.txt
 ```
 
 ### Useful guides:
-[Peter Roelants' guide to Implementing neural networks](https://peterroelants.github.io/posts/neural_network_implementation_part01/)
+* [Peter Roelants' guide to Implementing neural networks](https://peterroelants.github.io/posts/neural_network_implementation_part01/)
+* [Chris McCormick's guide to understanding PCA](mccormickml.com/2014/06/03/deep-learning-tutorial-pca-and-whitening/)
 
 
 ## Examples
