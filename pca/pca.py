@@ -20,7 +20,7 @@ class PCA(preprocessing.FunctionTransformer):
         eig_pairs.sort(key=lambda x: x[0], reverse=True)
 
         # Pick the 'n_components' vectors with the greatest variation.
-        w = np.hstack([pair[1].reshape(pair[1].shape[0], 1) for pair .n eig_pairs[:self.n_components]])
+        w = np.hstack([pair[1][:,np.newaxis] for pair in eig_pairs[:self.n_components]])
 
         sample_means = np.mean(all_samples, axis=1)
         return w.T.dot(all_samples - sample_means[:,np.newaxis]).T
