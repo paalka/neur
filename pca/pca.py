@@ -20,4 +20,4 @@ class PCA(preprocessing.FunctionTransformer):
         eig_pairs.sort(key=lambda x: x[0], reverse=True)
 
         matrix_w = np.hstack([pair[1].reshape(pair[1].shape[0], 1) for pair in eig_pairs[:self.n_components]])
-        return matrix_w.T.dot(all_samples).T
+        return matrix_w.T.dot(all_samples - means[:,np.newaxis]).T
