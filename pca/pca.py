@@ -11,13 +11,16 @@ class PCA(preprocessing.FunctionTransformer):
         return self
 
     def transform(self, X):
+        # Use the eigenvectors of the covariance matrix to determine the
+        # major directions of variation in the data.
         cov_matrix = np.cov(all_samples)
         eig_val, eig_vec = np.linalg.eig(cov_matrix)
 
         eig_pairs = [(np.abs(eig_val[i]), eig_vec[:,i]) for i in range(len(eig_val))]
         eig_pairs.sort(key=lambda x: x[0], reverse=True)
 
-        w = np.hstack([pair[1].reshape(pair[1].shape[0], 1) for pair in eig_pairs[:self.n_components]])
+        # Pick the 'n_components' vectors with the greatest variation.
+        w = np.hstack([pair[1].reshape(pair[1].shape[0], 1) for pair .n eig_pairs[:self.n_components]])
 
         sample_means = np.mean(all_samples, axis=1)
         return w.T.dot(all_samples - sample_means[:,np.newaxis]).T
