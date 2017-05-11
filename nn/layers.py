@@ -28,9 +28,9 @@ class LinearLayer(Layer):
 
         return Y
 
-    def update_layer(self, output_gradient, learning_rate, activations):
-        W_gradient = self.get_weight_gradient(activations[-1], output_gradient)
-        b_gradient = self.get_bias_gradient(activations[-1], output_gradient)
+    def update_layer(self, output_gradient, learning_rate, activation):
+        W_gradient = self.get_weight_gradient(activation, output_gradient)
+        b_gradient = self.get_bias_gradient(activation, output_gradient)
 
         self.W -= learning_rate * W_gradient
         self.b -= learning_rate * b_gradient

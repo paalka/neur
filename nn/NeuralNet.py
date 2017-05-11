@@ -28,7 +28,7 @@ class NeuralNet:
             input_gradient = layer.get_input_gradient(Y, output_gradient)
 
             # Will only be executed for the linear layers.
-            layer.update_layer(output_gradient, learning_rate, activations)
+            layer.update_layer(output_gradient, learning_rate, activations[-1])
 
             output_gradient = input_gradient
 
