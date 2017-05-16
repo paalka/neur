@@ -1,11 +1,12 @@
-import numpy as np
+import autograd.numpy as np
 
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
 from sklearn.preprocessing import OneHotEncoder
 
-from nn.layers import LinearLayer, TanhLayer, SoftmaxLayer
+from nn.layers import LinearLayer, Activation
 from nn.NeuralNet import NeuralNet
+from nn.activation_functions import tanh, softmax
 from utils.data_partitioners import mini_batch_partitioner
 from utils.load_mnist_data import load_mnist_imgs, load_mnist_labels
 
@@ -17,9 +18,9 @@ MNIST_N_POSSIBLE_VALUES = 10
 hidden_layer_1_neurons = 100
 hidden_layer_2_neurons = 100
 
-layer_1 = (LinearLayer(MNIST_IMG_WIDTH * MNIST_IMG_HEIGHT, hidden_layer_1_neurons), TanhLayer())
-layer_2 = (LinearLayer(hidden_layer_1_neurons, hidden_layer_2_neurons), TanhLayer())
-layer_3 = (LinearLayer(hidden_layer_2_neurons, MNIST_N_POSSIBLE_VALUES), SoftmaxLayer())
+layer_1 = (LinearLayer(MNIST_IMG_WIDTH * MNIST_IMG_HEIGHT, hidden_layer_1_neurons), Activation(tanh))
+layer_2 = (LinearLayer(hidden_layer_1_neurons, hidden_layer_2_neurons), Activation(tanh))
+layer_3 = (LinearLayer(hidden_layer_2_neurons, MNIST_N_POSSIBLE_VALUES), Activation(softmax))
 
 net = NeuralNet(mini_batch_partitioner, layer_1, layer_2, layer_3)
 

@@ -1,5 +1,5 @@
-import numpy as np
-from activation_functions import logistic, dlogistic, softmax, tanh, dtanh
+import autograd.numpy as np
+from autograd import elementwise_grad
 
 
 class Layer:
@@ -45,31 +45,17 @@ class LinearLayer(Layer):
         return np.sum(output_gradient, axis=0)
 
 
-class LogisticLayer(Layer):
+class Activation(Layer):
+
+    def __init__(self, activation_function):
+        self.activation_function = activation_function
+        self.activation_function_d = elementwise_grad(activation_function)
+        self.prev_input = None
 
     def get_output(self, X):
-        new_X = tanh(X)
+        new_X = self.activation_function(X)
         self.prev_input = X
-        return logistic(new_X)
-
-    def get_input_gradient(self, output_gradient):
-        return dlogistic(self.prev_input) * output_gradient
-
-
-class TanhLayer(Layer):
-
-    def get_output(self, X):
-        new_X = tanh(X)
-        self.prev_input = new_X
         return new_X
 
     def get_input_gradient(self, output_gradient):
-        return dtanh(self.prev_input) * output_gradient
-
-
-class SoftmaxLayer(Layer):
-
-    def get_output(self, X):
-        new_X = softmax(X)
-        self.prev_input = X
-        return new_X
+        return self.activation_function_d(self.prev_input) * output_gradient

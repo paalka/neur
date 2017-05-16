@@ -1,5 +1,5 @@
 from utils.data_partitioners import mini_batch_partitioner
-import numpy as np
+import autograd.numpy as np
 
 class NeuralNet:
 
