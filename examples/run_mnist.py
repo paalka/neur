@@ -34,10 +34,10 @@ learning_rate = 0.3
 costs = net.train((X_train, T_train), (X_validation, T_validation), learning_rate)
 
 test_mnist_imgs = load_mnist_imgs("data/t10k-images-idx3-ubyte") / NORMALIZATION_CONSTANT
-activations = net.feedforward(test_mnist_imgs)
+Y_predicted = net.feedforward(test_mnist_imgs)
 
 test_mnist_labels = one_hot_encoder.fit_transform(load_mnist_labels("data/t10k-labels-idx1-ubyte")).toarray()
 true = np.argmax(test_mnist_labels, axis=1)
-predictions = np.argmax(activations[-1], axis=1)
+predictions = np.argmax(Y_predicted, axis=1)
 
 print(accuracy_score(predictions, true))

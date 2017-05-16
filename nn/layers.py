@@ -10,7 +10,7 @@ class Layer:
     def get_output(self, X):
         pass
 
-    def get_input_gradient(self, Y, output_gradient=None, T=None):
+    def get_input_gradient(self, output_gradient=None, T=None):
         pass
 
     def update_layer(self, output_gradient, learning_rate):
@@ -38,7 +38,7 @@ class LinearLayer(Layer):
         self.W -= learning_rate * W_gradient
         self.b -= learning_rate * b_gradient
 
-    def get_input_gradient(self, Y, output_gradient):
+    def get_input_gradient(self, output_gradient):
         return output_gradient.dot(self.W.T)
 
     def get_weight_gradient(self, X, output_gradient):
@@ -51,25 +51,31 @@ class LinearLayer(Layer):
 class LogisticLayer(Layer):
 
     def get_output(self, X):
-        return logistic(X)
+        new_X = tanh(X)
+        self.prev_input = X
+        return logistic(new_X)
 
-    def get_input_gradient(self, Y, output_gradient):
-        return dlogistic(Y) * output_gradient
+    def get_input_gradient(self, output_gradient):
+        return dlogistic(self.prev_input) * output_gradient
 
 
 class TanhLayer(Layer):
 
     def get_output(self, X):
-        return tanh(X)
+        new_X = tanh(X)
+        self.prev_input = new_X
+        return new_X
 
-    def get_input_gradient(self, Y, output_gradient):
-        return dtanh(Y) * output_gradient
+    def get_input_gradient(self, output_gradient):
+        return dtanh(self.prev_input) * output_gradient
 
 
 class SoftmaxLayer(Layer):
 
     def get_output(self, X):
-        return softmax(X)
+        new_X = softmax(X)
+        self.prev_input = X
+        return new_X
 
     def get_cost(self, Y, T):
         return -np.sum(T * np.log(Y)) / Y.shape[0]

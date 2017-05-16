@@ -11,20 +11,16 @@ class NeuralNet:
             self.layers.append(non_lin_trans)
 
     def feedforward(self, X):
-        activations = []
         for layer in self.layers:
             X = layer.get_output(X)
-            activations.append(X)
 
-        return activations
+        return X
 
-    def backpropagate(self, learning_rate, activations, correct_predictions):
-        Y_predicted = activations.pop()
+    def backpropagate(self, learning_rate, Y_predicted, correct_predictions):
         output_gradient = (Y_predicted - correct_predictions) / Y_predicted.shape[0]
 
         for layer in reversed(self.layers[:-1]):
-            Y_predicted = activations.pop()
-            input_gradient = layer.get_input_gradient(Y_predicted, output_gradient)
+            input_gradient = layer.get_input_gradient(output_gradient)
 
             # Will only be executed for the linear layers.
             layer.update_layer(output_gradient, learning_rate)
@@ -42,7 +38,7 @@ class NeuralNet:
                 self.backpropagate(learning_rate, Y_predicted, T)
 
             Y_predicted = self.feedforward(X_validation)
-            validation_cost = self.layers[-1].get_cost(Y_predicted[-1], T_validation)
+            validation_cost = self.layers[-1].get_cost(Y_predicted, T_validation)
             validation_costs.append(validation_cost)
 
             if len(validation_costs) > 3:
