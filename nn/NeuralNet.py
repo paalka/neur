@@ -24,7 +24,6 @@ class NeuralNet:
         for layer in reversed(self.layers[:-1]):
             input_gradient = layer.get_input_gradient(output_gradient)
 
-            # Will only be executed for the linear layers.
             layer.update_layer(output_gradient, learning_rate)
 
             output_gradient = input_gradient
