@@ -5,13 +5,13 @@ from autograd import elementwise_grad
 class Layer:
 
     def get_output(self, X):
-        pass
+        raise NotImplementedError()
 
     def get_input_gradient(self, output_gradient=None, T=None):
-        pass
+        raise NotImplementedError()
 
     def update_layer(self, output_gradient, learning_rate):
-        pass
+        raise NotImplementedError()
 
 
 class LinearLayer(Layer):
@@ -59,3 +59,6 @@ class Activation(Layer):
 
     def get_input_gradient(self, output_gradient):
         return self.activation_function_d(self.prev_input) * output_gradient
+
+    def update_layer(self, output_gradient, learning_rate):
+        pass
