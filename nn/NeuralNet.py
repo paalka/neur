@@ -7,6 +7,7 @@ class NeuralNet:
         self.partitioner = partitioner
 
         self.layers = []
+        self.loss = lambda Y, Y_predicted: (Y_predicted - Y) / Y_predicted.shape[0]
         self.cost = lambda Y, T: -np.sum(T * np.log(Y)) / Y.shape[0]
         for lin_projection, non_lin_trans in layers:
             self.layers.append(lin_projection)
@@ -18,8 +19,8 @@ class NeuralNet:
 
         return X
 
-    def backpropagate(self, learning_rate, Y_predicted, correct_predictions):
-        output_gradient = (Y_predicted - correct_predictions) / Y_predicted.shape[0]
+    def backpropagate(self, learning_rate, Y_predicted, Y):
+        output_gradient = self.loss(Y, Y_predicted)
 
         for layer in reversed(self.layers[:-1]):
             input_gradient = layer.get_input_gradient(output_gradient)
@@ -34,9 +35,9 @@ class NeuralNet:
 
         for i in xrange(n_iterations):
             print("Started iteration: {} of {}".format(i+1, n_iterations))
-            for X, T in XT_batches:
+            for X, Y in XT_batches:
                 Y_predicted = self.feedforward(X)
-                self.backpropagate(learning_rate, Y_predicted, T)
+                self.backpropagate(learning_rate, Y_predicted, Y)
 
             Y_predicted = self.feedforward(X_validation)
             validation_cost = self.cost(Y_predicted, T_validation)
