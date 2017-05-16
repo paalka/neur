@@ -11,7 +11,7 @@ class NeuralNet:
             self.layers.append(non_lin_trans)
 
     def feedforward(self, X):
-        activations = [X]
+        activations = []
         for layer in self.layers:
             X = layer.get_output(X)
             activations.append(X)
