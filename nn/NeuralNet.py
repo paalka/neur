@@ -8,7 +8,7 @@ class NeuralNet:
 
         self.layers = []
         self.loss = lambda Y, Y_predicted: (Y_predicted - Y) / Y_predicted.shape[0]
-        self.cost = lambda Y, T: -np.sum(T * np.log(Y)) / Y.shape[0]
+        self.cost = lambda Y, Y_predicted: -np.sum(Y * np.log(Y_predicted)) / Y_predicted.shape[0]
         for lin_projection, non_lin_trans in layers:
             self.layers.append(lin_projection)
             self.layers.append(non_lin_trans)
@@ -40,7 +40,7 @@ class NeuralNet:
                 self.backpropagate(learning_rate, Y_predicted, Y)
 
             Y_predicted = self.feedforward(X_validation)
-            validation_cost = self.cost(Y_predicted, T_validation)
+            validation_cost = self.cost(T_validation, Y_predicted)
             validation_costs.append(validation_cost)
 
             if len(validation_costs) > 3:
