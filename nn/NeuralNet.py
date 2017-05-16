@@ -21,7 +21,6 @@ class NeuralNet:
     def backpropagate(self, learning_rate, activations, correct_predictions):
         Y_predicted = activations.pop()
         output_gradient = (Y_predicted - correct_predictions) / Y_predicted.shape[0]
-        input_gradient = self.layers[-1].get_input_gradient(Y_predicted, output_gradient)
 
         for layer in reversed(self.layers[:-1]):
             Y_predicted = activations.pop()
