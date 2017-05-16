@@ -10,25 +10,25 @@ class NeuralNet:
             self.layers.append(lin_projection)
             self.layers.append(non_lin_trans)
 
-    def feedforward(self, input_data):
-        activations = [input_data]
-
+    def feedforward(self, X):
+        activations = [X]
         for layer in self.layers:
-            X = activations[-1]
-            Y = layer.get_output(X)
-            activations.append(Y)
+            X = layer.get_output(X)
+            activations.append(X)
 
         return activations
 
     def backpropagate(self, learning_rate, activations, correct_predictions):
-        output_gradient = correct_predictions
+        Y_predicted = activations.pop()
+        output_gradient = (Y_predicted - correct_predictions) / Y_predicted.shape[0]
+        input_gradient = self.layers[-1].get_input_gradient(Y_predicted, output_gradient)
 
-        for layer in reversed(self.layers):
-            Y = activations.pop()
-            input_gradient = layer.get_input_gradient(Y, output_gradient)
+        for layer in reversed(self.layers[:-1]):
+            Y_predicted = activations.pop()
+            input_gradient = layer.get_input_gradient(Y_predicted, output_gradient)
 
             # Will only be executed for the linear layers.
-            layer.update_layer(output_gradient, learning_rate, activations[-1])
+            layer.update_layer(output_gradient, learning_rate)
 
             output_gradient = input_gradient
 
@@ -39,11 +39,11 @@ class NeuralNet:
         for i in xrange(n_iterations):
             print("Started iteration: {} of {}".format(i+1, n_iterations))
             for X, T in XT_batches:
-                activations = self.feedforward(X)
-                self.backpropagate(learning_rate, activations, T)
+                Y_predicted = self.feedforward(X)
+                self.backpropagate(learning_rate, Y_predicted, T)
 
-            activations = self.feedforward(X_validation)
-            validation_cost = self.layers[-1].get_cost(activations[-1], T_validation)
+            Y_predicted = self.feedforward(X_validation)
+            validation_cost = self.layers[-1].get_cost(Y_predicted[-1], T_validation)
             validation_costs.append(validation_cost)
 
             if len(validation_costs) > 3:
