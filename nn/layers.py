@@ -76,6 +76,3 @@ class SoftmaxLayer(Layer):
         new_X = softmax(X)
         self.prev_input = X
         return new_X
-
-    def get_cost(self, Y, T):
-        return -np.sum(T * np.log(Y)) / Y.shape[0]
