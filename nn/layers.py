@@ -4,9 +4,6 @@ from activation_functions import logistic, dlogistic, softmax, tanh, dtanh
 
 class Layer:
 
-    def get_params_gradient(self, X, output_gradient):
-        return []
-
     def get_output(self, X):
         pass
 
