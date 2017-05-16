@@ -6,12 +6,9 @@ class NeuralNet:
     def __init__(self, partitioner=mini_batch_partitioner, *layers):
         self.partitioner = partitioner
 
-        self.layers = []
+        self.layers = layers
         self.loss = lambda Y, Y_predicted: (Y_predicted - Y) / Y_predicted.shape[0]
         self.cost = lambda Y, Y_predicted: -np.sum(Y * np.log(Y_predicted)) / Y_predicted.shape[0]
-        for lin_projection, non_lin_trans in layers:
-            self.layers.append(lin_projection)
-            self.layers.append(non_lin_trans)
 
     def feedforward(self, X):
         for layer in self.layers:
