@@ -18,14 +18,15 @@ MNIST_N_POSSIBLE_VALUES = 10
 hidden_layer_1_neurons = 100
 hidden_layer_2_neurons = 100
 
-net = NeuralNet(mini_batch_partitioner,
-                    LinearLayer(MNIST_IMG_WIDTH * MNIST_IMG_HEIGHT, hidden_layer_1_neurons),
-                    Activation(tanh),
-                    LinearLayer(hidden_layer_1_neurons, hidden_layer_2_neurons),
-                    Activation(tanh),
-                    LinearLayer(hidden_layer_2_neurons, MNIST_N_POSSIBLE_VALUES),
-                    Activation(softmax)
-                )
+net = NeuralNet([LinearLayer(MNIST_IMG_WIDTH * MNIST_IMG_HEIGHT, hidden_layer_1_neurons),
+                 Activation(tanh),
+                 LinearLayer(hidden_layer_1_neurons, hidden_layer_2_neurons),
+                 Activation(tanh),
+                 LinearLayer(hidden_layer_2_neurons, MNIST_N_POSSIBLE_VALUES),
+                 Activation(softmax)
+                ],
+                partitioner=mini_batch_partitioner
+               )
 
 training_mnist_imgs = load_mnist_imgs("data/train-images-idx3-ubyte") / NORMALIZATION_CONSTANT
 

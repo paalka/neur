@@ -3,12 +3,19 @@ import autograd.numpy as np
 
 class NeuralNet:
 
-    def __init__(self, partitioner=mini_batch_partitioner, *layers):
+    def __init__(self, layers, loss=None, cost=None, partitioner=mini_batch_partitioner):
         self.partitioner = partitioner
 
         self.layers = layers
-        self.loss = lambda Y, Y_predicted: (Y_predicted - Y) / Y_predicted.shape[0]
-        self.cost = lambda Y, Y_predicted: -np.sum(Y * np.log(Y_predicted)) / Y_predicted.shape[0]
+        if loss == None:
+            self.loss = lambda Y, Y_predicted: (Y_predicted - Y) / Y_predicted.shape[0]
+        else:
+            self.loss = loss
+
+        if cost == None:
+            self.cost = lambda Y, Y_predicted: -np.sum(Y * np.log(Y_predicted)) / Y_predicted.shape[0]
+        else:
+            self.cost = cost
 
     def feedforward(self, X):
         for layer in self.layers:
