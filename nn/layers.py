@@ -2,7 +2,7 @@ import autograd.numpy as np
 from autograd import elementwise_grad
 
 
-class Layer:
+class Layer(object):
 
     def get_output(self, X):
         raise NotImplementedError()

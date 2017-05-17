@@ -1,7 +1,7 @@
 from utils.data_partitioners import mini_batch_partitioner
 import autograd.numpy as np
 
-class NeuralNet:
+class NeuralNet(object):
 
     def __init__(self, layers, loss=None, cost=None, partitioner=mini_batch_partitioner):
         self.partitioner = partitioner
