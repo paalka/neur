@@ -35,7 +35,10 @@ class NeuralNet(base.BaseEstimator):
 
             output_gradient = input_gradient
 
-    def train(self, training_set, validation_set, learning_rate=0.1, batch_size=32, n_iterations=30):
+    def train(self, X, y, learning_rate=0.1, batch_size=32, n_iterations=30):
+        X_train, X_validation, T_train, T_validation = train_test_split(X, y, test_size=0.2)
+        training_set = (X_train, T_train)
+        validation_set = (X_validation, T_validation)
         XT_batches, X_validation, T_validation = self.partitioner(training_set, validation_set, batch_size)
         validation_costs = []
 
@@ -57,8 +60,7 @@ class NeuralNet(base.BaseEstimator):
         return validation_costs
 
     def fit(self, X, y=None):
-        X_train, X_validation, T_train, T_validation = train_test_split(X, y, test_size=0.2)
-        self.train((X_train, T_train), (X_validation, T_validation))
+        self.train(X, y)
 
     def predict(self, X, y=None):
         return self.feedforward(X)
