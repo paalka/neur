@@ -1,7 +1,9 @@
 from utils.data_partitioners import mini_batch_partitioner
+from sklearn.model_selection import train_test_split
+from sklearn import base
 import autograd.numpy as np
 
-class NeuralNet(object):
+class NeuralNet(base.BaseEstimator):
 
     def __init__(self, layers, loss=None, cost=None, partitioner=mini_batch_partitioner):
         self.partitioner = partitioner
@@ -53,3 +55,10 @@ class NeuralNet(object):
                     return validation_costs
 
         return validation_costs
+
+    def fit(self, X, y=None):
+        X_train, X_validation, T_train, T_validation = train_test_split(X, y, test_size=0.2)
+        self.train((X_train, T_train), (X_validation, T_validation))
+
+    def predict(self, X, y=None):
+        return self.feedforward(X)

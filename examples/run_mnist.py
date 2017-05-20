@@ -1,8 +1,8 @@
 import autograd.numpy as np
 
-from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
 from sklearn.preprocessing import OneHotEncoder
+from sklearn.pipeline import Pipeline
 
 from nn.layers import LinearLayer, Activation
 from nn.NeuralNet import NeuralNet
@@ -29,17 +29,17 @@ net = NeuralNet([LinearLayer(MNIST_IMG_WIDTH * MNIST_IMG_HEIGHT, hidden_layer_1_
                )
 
 training_mnist_imgs = load_mnist_imgs("data/train-images-idx3-ubyte") / NORMALIZATION_CONSTANT
-
 one_hot_encoder = OneHotEncoder()
 training_mnist_labels = one_hot_encoder.fit_transform(load_mnist_labels("data/train-labels-idx1-ubyte")).toarray()
 
-X_train, X_validation, T_train, T_validation = train_test_split(training_mnist_imgs, training_mnist_labels, test_size=0.2)
+pipeline = Pipeline([
+                    ("nn_clf", net)
+                ])
 
-learning_rate = 0.3
-costs = net.train((X_train, T_train), (X_validation, T_validation), learning_rate)
 
+pipeline.fit(training_mnist_imgs, training_mnist_labels)
 test_mnist_imgs = load_mnist_imgs("data/t10k-images-idx3-ubyte") / NORMALIZATION_CONSTANT
-Y_predicted = net.feedforward(test_mnist_imgs)
+Y_predicted = pipeline.predict(test_mnist_imgs)
 
 test_mnist_labels = one_hot_encoder.fit_transform(load_mnist_labels("data/t10k-labels-idx1-ubyte")).toarray()
 true = np.argmax(test_mnist_labels, axis=1)
