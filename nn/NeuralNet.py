@@ -8,12 +8,12 @@ class NeuralNet(base.BaseEstimator):
         self.layers = layers
         self.optimizer = optimizer(self)
 
-        if loss == None:
+        if loss is None:
             self.loss = lambda Y, Y_predicted: (Y_predicted - Y) / Y_predicted.shape[0]
         else:
             self.loss = loss
 
-        if cost == None:
+        if cost is None:
             self.cost = lambda Y, Y_predicted: -np.sum(Y * np.log(Y_predicted)) / Y_predicted.shape[0]
         else:
             self.cost = cost
