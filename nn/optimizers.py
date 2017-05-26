@@ -20,7 +20,7 @@ class SGD():
         XT_batches, X_validation, T_validation = self.partitioner(training_set, validation_set, self.batch_size)
         validation_costs = []
 
-        for i in xrange(self.n_iterations):
+        for i in range(self.n_iterations):
             print("Started iteration: {} of {}".format(i+1, self.n_iterations))
             for X, Y in XT_batches:
                 Y_predicted = self.network.feedforward(X)

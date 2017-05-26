@@ -18,7 +18,7 @@ class KNN(base.BaseEstimator):
         n_test = X.shape[0]
         y_pred = np.zeros(n_test, dtype=self.y_train.dtype)
 
-        for i in xrange(n_test):
+        for i in range(n_test):
             # Find the distance to each example in the training set
             distances = self.distance_f(self.X_train, X[i,:])
 
