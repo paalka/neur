@@ -1,8 +1,6 @@
+from scipy.spatial import distance
 import numpy as np
 import random
-
-def euclidean_distance(a, b):
-    return np.sqrt(sum((a - b) ** 2))
 
 def assign_to_cluster(X, centroids):
     clusters  = {}
@@ -21,7 +19,7 @@ def find_closest(point, centroids):
     closest_centroid_i = None
 
     for i, centroid in enumerate(centroids):
-        curr_dist = euclidean_distance(point, centroid)
+        curr_dist = distance.euclidean(point, centroid)
         if closest_centroid_dist is None or curr_dist < closest_centroid_dist:
             closest_centroid_i = i
             closest_centroid_dist = curr_dist
