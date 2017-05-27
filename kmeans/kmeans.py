@@ -26,7 +26,7 @@ class KMeans(base.BaseEstimator):
         closest_centroid_i = None
 
         for i, centroid in enumerate(centroids):
-            curr_dist = distance.euclidean(point, centroid)
+            curr_dist = self.distance_f(point, centroid)
             if closest_centroid_dist is None or curr_dist < closest_centroid_dist:
                 closest_centroid_i = i
                 closest_centroid_dist = curr_dist
