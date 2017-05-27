@@ -4,9 +4,15 @@ import numpy as np
 import random
 
 class KMeans(base.BaseEstimator):
-    def __init__(self, k, distance_f=distance.euclidean):
+    def __init__(self, k, distance_f=None):
         self.k = k
         self.distance_f = distance_f
+
+        if distance_f is None:
+            self.distance_f = lambda u, v: np.linalg.norm(u-v, axis=1)
+        else:
+            self.distance_f = distance_f
+
         self.centroids = None
         
     def assign_to_cluster(self, X, centroids):
@@ -22,16 +28,8 @@ class KMeans(base.BaseEstimator):
         return clusters
 
     def find_closest(self, point, centroids):
-        closest_centroid_dist = None
-        closest_centroid_i = None
-
-        for i, centroid in enumerate(centroids):
-            curr_dist = self.distance_f(point, centroid)
-            if closest_centroid_dist is None or curr_dist < closest_centroid_dist:
-                closest_centroid_i = i
-                closest_centroid_dist = curr_dist
-
-        return closest_centroid_i
+        distances = self.distance_f(centroids, point)
+        return np.argmin(distances)
 
     def reevaluate_centers(self, points_in_cluster):
         new_centroids = []
@@ -46,8 +44,8 @@ class KMeans(base.BaseEstimator):
 
     def find_centers(self, X):
         # Initialize the centroids to K random centers
-        old_centroids = random.sample(X, self.k)
-        centroids = random.sample(X, self.k)
+        old_centroids = np.matrix(random.sample(X, self.k))
+        centroids = np.matrix(random.sample(X, self.k))
 
         while not self.has_converged(centroids, old_centroids):
             old_centroids = centroids
