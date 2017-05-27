@@ -1,14 +1,12 @@
 import numpy as np
+from utils import distance
 from sklearn import base
 
 class KNN(base.BaseEstimator):
 
-    def __init__(self, k, distance_f=None):
+    def __init__(self, k, distance_f=distance.euclidean):
         self.k = k
-        if distance_f is None:
-            self.distance_f = lambda u, v: np.linalg.norm(u-v, axis=1)
-        else:
-            self.distance_f = distance_f
+        self.distance_f = distance_f
 
     def fit(self, X, y):
         self.X_train = X

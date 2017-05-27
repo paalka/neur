@@ -1,17 +1,12 @@
-from scipy.spatial import distance
 from sklearn import base
+from utils import distance
 import numpy as np
 import random
 
 class KMeans(base.BaseEstimator):
-    def __init__(self, k, distance_f=None):
+    def __init__(self, k, distance_f=distance.euclidean):
         self.k = k
         self.distance_f = distance_f
-
-        if distance_f is None:
-            self.distance_f = lambda u, v: np.linalg.norm(u-v, axis=1)
-        else:
-            self.distance_f = distance_f
 
         self.centroids = None
         
