@@ -27,7 +27,7 @@ net = NeuralNet([LinearLayer(MNIST_IMG_WIDTH * MNIST_IMG_HEIGHT, hidden_layer_1_
                 ]
                )
 
-training_mnist_imgs = load_mnist_imgs("data/train-images-idx3-ubyte") / NORMALIZATION_CONSTANT
+training_mnist_imgs = (load_mnist_imgs("data/train-images-idx3-ubyte") / NORMALIZATION_CONSTANT).astype(np.float16)
 one_hot_encoder = OneHotEncoder()
 training_mnist_labels = one_hot_encoder.fit_transform(load_mnist_labels("data/train-labels-idx1-ubyte")).toarray()
 
@@ -37,7 +37,7 @@ pipeline = Pipeline([
 
 
 pipeline.fit(training_mnist_imgs, training_mnist_labels)
-test_mnist_imgs = load_mnist_imgs("data/t10k-images-idx3-ubyte") / NORMALIZATION_CONSTANT
+test_mnist_imgs = (load_mnist_imgs("data/t10k-images-idx3-ubyte") / NORMALIZATION_CONSTANT).astype(np.float16)
 Y_predicted = pipeline.predict(test_mnist_imgs)
 
 test_mnist_labels = one_hot_encoder.fit_transform(load_mnist_labels("data/t10k-labels-idx1-ubyte")).toarray()
