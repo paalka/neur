@@ -19,8 +19,8 @@ pip install -r requirements.txt
 ### Running the MNIST example
 Begin by downloading the MNIST dataset from the [MNIST database
 homepage](http://yann.lecun.com/exdb/mnist/). The location of the dataset is
-hardcoded to `data` in the file `run_mnist.py`, but feel free to change it.
+hardcoded to `data` in the file `nn_mnist.py`, but feel free to change it.
 
 After having installed the requirements, you should be able to run
-`python -m examples.run_mnist`, which trains the network
+`python -m examples.nn_mnist`, which trains the network
 and prints the final accuracy.
