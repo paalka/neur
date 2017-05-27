@@ -4,6 +4,7 @@ import numpy as np
 import random
 
 class KMeans(base.BaseEstimator):
+
     def __init__(self, k, distance_f=distance.euclidean):
         self.k = k
         self.distance_f = distance_f
